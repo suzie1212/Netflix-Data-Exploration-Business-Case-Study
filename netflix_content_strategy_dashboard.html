@@ -1,0 +1,210 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.dash{padding:1rem 0}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.25rem}
+.kpi{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:.85rem 1rem}
+.kpi-label{font-size:12px;color:var(--color-text-secondary);margin-bottom:5px}
+.kpi-val{font-size:21px;font-weight:500;color:var(--color-text-primary)}
+.kpi-sub{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
+.tab-row{display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap}
+.tab{padding:5px 14px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);font-size:13px;cursor:pointer;background:var(--color-background-primary);color:var(--color-text-secondary)}
+.tab.active{background:#E50914;color:#fff;border-color:#E50914}
+.sec{display:none}.sec.on{display:block}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:.9rem 1rem}
+.ct{font-size:12px;color:var(--color-text-secondary);margin-bottom:10px}
+.leg{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:8px;font-size:12px;color:var(--color-text-secondary)}
+.leg span{display:flex;align-items:center;gap:4px}
+.lsq{width:10px;height:10px;border-radius:2px;display:inline-block}
+</style>
+
+<div class="dash">
+<h2 class="sr-only">Netflix content strategy dashboard: 8,807 titles analysed across content type, geography, genre, timing, and talent.</h2>
+
+<div class="kpi-grid">
+  <div class="kpi"><div class="kpi-label">Total titles</div><div class="kpi-val">8,807</div><div class="kpi-sub">Movies + TV Shows</div></div>
+  <div class="kpi"><div class="kpi-label">Movies</div><div class="kpi-val">6,131</div><div class="kpi-sub">69.6% of library</div></div>
+  <div class="kpi"><div class="kpi-label">TV Shows</div><div class="kpi-val">2,676</div><div class="kpi-sub">30.4% of library</div></div>
+  <div class="kpi"><div class="kpi-label">Avg movie duration</div><div class="kpi-val">100 min</div><div class="kpi-sub">Mode: 90 min</div></div>
+</div>
+
+<div class="tab-row">
+  <button class="tab active" onclick="show('content')">Content overview</button>
+  <button class="tab" onclick="show('geo')">Geography</button>
+  <button class="tab" onclick="show('timing')">Release timing</button>
+  <button class="tab" onclick="show('talent')">Talent & genres</button>
+</div>
+
+<div id="s-content" class="sec on">
+  <div class="row2">
+    <div class="card">
+      <div class="ct">Movies vs TV Shows</div>
+      <div class="leg"><span><span class="lsq" style="background:#E50914"></span>Movies 69.6%</span><span><span class="lsq" style="background:#221F1F"></span>TV Shows 30.4%</span></div>
+      <div style="position:relative;height:200px"><canvas id="c1" role="img" aria-label="Donut chart: Movies 6131 (69.6%), TV Shows 2676 (30.4%)">Movies 6131, TV Shows 2676</canvas></div>
+    </div>
+    <div class="card">
+      <div class="ct">Top 10 content ratings</div>
+      <div style="position:relative;height:200px"><canvas id="c2" role="img" aria-label="Bar chart of top 10 Netflix content ratings by count">TV-MA leads with 3207 titles</canvas></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="ct">Content added per year (2013–2021)</div>
+    <div class="leg"><span><span class="lsq" style="background:#E50914"></span>Movies</span><span><span class="lsq" style="background:#221F1F" style="border:1px solid #888"></span>TV Shows</span></div>
+    <div style="position:relative;height:220px"><canvas id="c3" role="img" aria-label="Grouped bar chart of content added per year from 2013 to 2021">Rapid growth 2016-2019, peak in 2019</canvas></div>
+  </div>
+  <div class="row2" style="margin-top:14px">
+    <div class="card">
+      <div class="ct">Movie duration distribution (minutes)</div>
+      <div style="position:relative;height:200px"><canvas id="c4" role="img" aria-label="Bar chart of movie duration buckets in minutes">Most movies 91-120 minutes</canvas></div>
+    </div>
+    <div class="card">
+      <div class="ct">TV show seasons distribution</div>
+      <div style="position:relative;height:200px"><canvas id="c5" role="img" aria-label="Bar chart of TV show season counts">Most TV shows have 1 season</canvas></div>
+    </div>
+  </div>
+</div>
+
+<div id="s-geo" class="sec">
+  <div class="row2">
+    <div class="card">
+      <div class="ct">Top 10 countries — movies</div>
+      <div style="position:relative;height:420px"><canvas id="c6" role="img" aria-label="Horizontal bar chart top 10 countries for movies">USA leads, India second</canvas></div>
+    </div>
+    <div class="card">
+      <div class="ct">Top 10 countries — TV Shows</div>
+      <div style="position:relative;height:420px"><canvas id="c7" role="img" aria-label="Horizontal bar chart top 10 countries for TV shows">USA leads, Japan and South Korea rising</canvas></div>
+    </div>
+  </div>
+</div>
+
+<div id="s-timing" class="sec">
+  <div class="row2">
+    <div class="card">
+      <div class="ct">Best month to add movies</div>
+      <div style="position:relative;height:220px"><canvas id="c8" role="img" aria-label="Bar chart of movie additions by month">Jan, Apr, Jul, Dec are peak months</canvas></div>
+    </div>
+    <div class="card">
+      <div class="ct">Best month to add TV Shows</div>
+      <div style="position:relative;height:220px"><canvas id="c9" role="img" aria-label="Bar chart of TV show additions by month">Jun, Jul, Sep, Dec peak months</canvas></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="ct">Time gap between release year and Netflix addition (years)</div>
+    <div style="position:relative;height:220px"><canvas id="c10" role="img" aria-label="Bar chart of time gap distribution between release and Netflix addition">Most content added within 0-2 years of release</canvas></div>
+  </div>
+</div>
+
+<div id="s-talent" class="sec">
+  <div class="card" style="margin-bottom:14px">
+    <div class="ct">Top 10 genres</div>
+    <div style="position:relative;height:260px"><canvas id="c11" role="img" aria-label="Horizontal bar chart of top 10 Netflix genres">International Movies and Dramas dominate</canvas></div>
+  </div>
+  <div class="row2">
+    <div class="card">
+      <div class="ct">Top 10 directors</div>
+      <div style="position:relative;height:420px"><canvas id="c12" role="img" aria-label="Horizontal bar chart of top 10 Netflix directors by title count">Rajiv Chilaka leads with 22 titles</canvas></div>
+    </div>
+    <div class="card">
+      <div class="ct">Top 10 actors</div>
+      <div style="position:relative;height:420px"><canvas id="c13" role="img" aria-label="Horizontal bar chart of top 10 Netflix actors by title count">Anupam Kher leads with 43 titles</canvas></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+function show(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
+  document.getElementById('s-'+id).classList.add('on');
+  document.querySelectorAll('.tab').forEach((t,i)=>{
+    t.classList.toggle('active',['content','geo','timing','talent'][i]===id);
+  });
+}
+
+const isDark=matchMedia('(prefers-color-scheme: dark)').matches;
+const gc=isDark?'rgba(255,255,255,0.07)':'rgba(0,0,0,0.06)';
+const tc=isDark?'#aaa':'#666';
+const RED='#E50914'; const DARK='#564d4d';
+const base={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+  scales:{x:{grid:{color:gc},ticks:{color:tc,font:{size:11}}},y:{grid:{color:gc},ticks:{color:tc,font:{size:11}}}}};
+
+new Chart(document.getElementById('c1'),{type:'doughnut',
+  data:{labels:['Movies','TV Shows'],datasets:[{data:[6131,2676],backgroundColor:[RED,isDark?'#564d4d':'#221F1F'],borderWidth:2,borderColor:isDark?'#111':'#fff'}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},cutout:'60%'}});
+
+new Chart(document.getElementById('c2'),{type:'bar',
+  data:{labels:['TV-MA','TV-14','TV-PG','R','PG-13','TV-Y7','TV-Y','PG','TV-G','NR'],
+    datasets:[{data:[3207,2160,863,799,490,334,307,287,220,80],backgroundColor:RED,borderRadius:3}]},
+  options:{...base,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+c.raw.toLocaleString()+' titles'}}},
+    scales:{x:{grid:{display:false},ticks:{color:tc,font:{size:10},autoSkip:false,maxRotation:45}},y:{grid:{color:gc},ticks:{color:tc,font:{size:11}}}}}});
+
+new Chart(document.getElementById('c3'),{type:'bar',
+  data:{labels:['2013','2014','2015','2016','2017','2018','2019','2020','2021'],
+    datasets:[
+      {label:'Movies',data:[6,19,56,253,839,1237,1424,1284,993],backgroundColor:RED,borderRadius:2},
+      {label:'TV Shows',data:[4,4,17,165,325,388,575,594,505],backgroundColor:isDark?'#564d4d':'#221F1F',borderRadius:2}
+    ]},
+  options:{...base,plugins:{legend:{display:false},tooltip:{mode:'index'}},
+    scales:{x:{grid:{display:false},ticks:{color:tc,font:{size:11},autoSkip:false}},y:{grid:{color:gc},ticks:{color:tc,font:{size:11}}}}}});
+
+new Chart(document.getElementById('c4'),{type:'bar',
+  data:{labels:['0–30','31–60','61–90','91–120','121–150','151–180','181–210','210+'],
+    datasets:[{data:[130,357,1503,2996,897,198,36,10],backgroundColor:'#E50914',borderRadius:3}]},
+  options:{...base,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+c.raw.toLocaleString()+' movies'}}},
+    scales:{x:{grid:{display:false},ticks:{color:tc,font:{size:10},autoSkip:false,maxRotation:30}},y:{grid:{color:gc},ticks:{color:tc,font:{size:11}}}}}});
+
+new Chart(document.getElementById('c5'),{type:'bar',
+  data:{labels:['1','2','3','4','5','6','7','8','9','10'],
+    datasets:[{data:[1793,425,199,95,65,33,23,17,9,7],backgroundColor:'#E50914',borderRadius:3}]},
+  options:{...base,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+c.raw.toLocaleString()+' shows'}}},
+    scales:{x:{grid:{display:false},ticks:{color:tc,font:{size:11},autoSkip:false}},y:{grid:{color:gc},ticks:{color:tc,font:{size:11}}}}}});
+
+new Chart(document.getElementById('c6'),{type:'bar',indexAxis:'y',
+  data:{labels:['United States','India','United Kingdom','Canada','France','Germany','Spain','Japan','China','Unknown'],
+    datasets:[{data:[2752,962,534,319,303,182,171,119,114,440],backgroundColor:RED,borderRadius:3}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+c.raw.toLocaleString()+' movies'}}},
+    scales:{x:{grid:{color:gc},ticks:{color:tc,font:{size:11}}},y:{grid:{display:false},ticks:{color:tc,font:{size:11}}}}}});
+
+new Chart(document.getElementById('c7'),{type:'bar',indexAxis:'y',
+  data:{labels:['United States','United Kingdom','Japan','South Korea','Canada','France','India','Taiwan','Australia','Unknown'],
+    datasets:[{data:[938,272,199,170,126,90,84,70,66,391],backgroundColor:isDark?'#564d4d':'#221F1F',borderRadius:3}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+c.raw.toLocaleString()+' shows'}}},
+    scales:{x:{grid:{color:gc},ticks:{color:tc,font:{size:11}}},y:{grid:{display:false},ticks:{color:tc,font:{size:11}}}}}});
+
+const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+new Chart(document.getElementById('c8'),{type:'bar',
+  data:{labels:months,datasets:[{data:[546,382,529,550,439,492,565,519,519,545,498,547],backgroundColor:RED,borderRadius:3}]},
+  options:{...base,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+c.raw.toLocaleString()+' movies'}}},
+    scales:{x:{grid:{display:false},ticks:{color:tc,font:{size:11},autoSkip:false}},y:{grid:{color:gc},ticks:{color:tc,font:{size:11}}}}}});
+
+new Chart(document.getElementById('c9'),{type:'bar',
+  data:{labels:months,datasets:[{data:[181,175,205,209,187,232,254,230,246,210,199,250],backgroundColor:isDark?'#564d4d':'#221F1F',borderRadius:3}]},
+  options:{...base,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+c.raw.toLocaleString()+' shows'}}},
+    scales:{x:{grid:{display:false},ticks:{color:tc,font:{size:11},autoSkip:false}},y:{grid:{color:gc},ticks:{color:tc,font:{size:11}}}}}});
+
+new Chart(document.getElementById('c10'),{type:'bar',
+  data:{labels:Array.from({length:16},(_,i)=>i.toString()),
+    datasets:[{data:[3222,1559,707,484,358,260,247,183,183,160,134,135,97,97,76,59],backgroundColor:RED,borderRadius:2}]},
+  options:{...base,plugins:{legend:{display:false},tooltip:{callbacks:{title:t=>'Gap: '+t[0].label+' years',label:c=>' '+c.raw.toLocaleString()+' titles'}}},
+    scales:{x:{grid:{display:false},ticks:{color:tc,font:{size:11},autoSkip:false}},y:{grid:{color:gc},ticks:{color:tc,font:{size:11}}}}}});
+
+new Chart(document.getElementById('c11'),{type:'bar',indexAxis:'y',
+  data:{labels:['International Movies','Dramas','Comedies','International TV Shows','Documentaries','Action & Adventure','TV Dramas','Independent Movies','Children & Family','Romantic Movies'],
+    datasets:[{data:[2752,2427,1674,1351,869,859,763,756,641,616],backgroundColor:RED,borderRadius:3}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+c.raw.toLocaleString()+' titles'}}},
+    scales:{x:{grid:{color:gc},ticks:{color:tc,font:{size:11}}},y:{grid:{display:false},ticks:{color:tc,font:{size:10}}}}}});
+
+new Chart(document.getElementById('c12'),{type:'bar',indexAxis:'y',
+  data:{labels:['Rajiv Chilaka','Jan Suter','Raúl Campos','Suhas Kadav','Marcus Raboy','Jay Karas','Cathy Garcia-Molina','Martin Scorsese','Jay Chapman','Youssef Chahine'],
+    datasets:[{data:[22,21,19,16,16,15,13,12,12,12],backgroundColor:RED,borderRadius:3}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+c.raw+' titles'}}},
+    scales:{x:{grid:{color:gc},ticks:{color:tc,font:{size:11}}},y:{grid:{display:false},ticks:{color:tc,font:{size:11}}}}}});
+
+new Chart(document.getElementById('c13'),{type:'bar',indexAxis:'y',
+  data:{labels:['Anupam Kher','Shah Rukh Khan','Julie Tejwani','Takahiro Sakurai','Naseeruddin Shah','Rupa Bhimani','Om Puri','Akshay Kumar','Yuki Kaji','Amitabh Bachchan'],
+    datasets:[{data:[43,35,33,32,32,31,30,30,29,28],backgroundColor:isDark?'#564d4d':'#221F1F',borderRadius:3}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+c.raw+' titles'}}},
+    scales:{x:{grid:{color:gc},ticks:{color:tc,font:{size:11}}},y:{grid:{display:false},ticks:{color:tc,font:{size:11}}}}}});
+</script>
