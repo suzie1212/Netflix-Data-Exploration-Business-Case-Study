@@ -1,2 +1,2 @@
 # Netflix-Data-Exploration-Business-Case-Study
-Goal: Analyzing Netflix data to help the Business Decide:  To identify the content type Determining the content ratings Geographical distribution of data Analysing patterns of releases Analysing top directors and actors Optimising content
+Goal: Analysing Netflix data to help the business decide: identifying the content type, determining the content ratings, Geographical distribution of data, Analysing patterns of releases, analysing top directors and actors and optimising content
